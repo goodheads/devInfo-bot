@@ -2,6 +2,7 @@
 #   Crafted by Prosper
 #   Integrated with Slack
 
+_           = require 'lodash'
 info        = require './info'
 help        = require './help'
 
@@ -13,17 +14,15 @@ module.exports = (robot) ->
     msg.send response
 
   robot.respond /all/i, (msg) ->
-    response = "Hello friend :grin: would you like to upgrade your typing speed?
-                A timer starts immediately you receive a paragraph.
-                Enter `help` to know more about how to operate typingspeedbot.
-                Enter `ready` to get a random paragraph!"
-    msg.send response
+
+    _.forEach info, (value, key) ->
+       msg.send  "#{key} -> #{value} \n"
 
   robot.respond /get developer (.*)/i, (msg) ->
     devName = escape(msg.match[1])
     response = info[devName]
     if response == undefined
-       response = "We don't Know you. Please gerrahia"
+       response = "We don't Know you. Please gerrahia!"
     msg.send response
 
   #Spills out custome typingspeed bot help commands
